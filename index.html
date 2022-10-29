@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>公司员工个人信息</title>
+    <style>
+      input[type="select"] {
+        font-size: 10rem;
+      }
+      #personal-info > div {
+        display: flex;
+        padding: 2px;
+        align-items: center;
+      }
+      label {
+        user-select: none;
+      }
+      #personal-info > div > label {
+        min-width: 25%;
+      }
+      #personal-info > * {
+        padding: 0;
+        margin: 0 0 0.5rem;
+      }
+      #personal-info {
+        font-family: FangSong, serif;
+        background-color: lightyellow;
+        max-width: 60%;
+        margin: auto;
+      }
+      #form-caption {
+        background-color: lightgray;
+        text-align: center;
+        margin-bottom: 0;
+      }
+      #skills {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+      #department {
+        padding: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" id="personal-info">
+      <p id="form-caption">公司员工个人信息</p>
+      <div>
+        <label for="employee-number">工 号：</label>
+        <input
+          id="employee-number"
+          type="text"
+          value="11-78101"
+          pattern="\d\d-\d\d\d\d\d"
+        />
+      </div>
+      <div>
+        <label for="name">姓 名：</label>
+        <input id="name" type="text" value="万顺风" />
+      </div>
+      <div>
+        <label for="">性 别：</label>
+        <div>
+          <input
+            type="radio"
+            name="gender"
+            id="gender-male"
+            value="male"
+            checked
+          />
+          <label for="gender-male">男</label>
+          <input type="radio" name="gender" id="gender-female" value="female" />
+          <label for="gender-female">女</label>
+        </div>
+      </div>
+      <div>
+        <label for="birth-date">出生日期：</label>
+        <input id="birth-date" type="date" value="1978-05-06" />
+      </div>
+      <div>
+        <label for="certification">所学专业：</label>
+        <select id="certification">
+          <option value="" disabled>选择所学专业</option>
+          <option value="machining" selected>机械制造</option>
+          <option value="software-engineering">软件工程</option>
+          <option value="civil-engineering">土木工程</option>
+          <option value="fine-art">美术</option>
+        </select>
+      </div>
+      <div>
+        <label for="department">所属部门：</label>
+        <select name="department" id="department" multiple size="3">
+          <option value="safety" selected>安全部</option>
+          <option value="prod-floor-1">一车间</option>
+          <option value="quality-control">质检部</option>
+          <option value="prod-floor-2">二车间</option>
+          <option value="prod-floor-3">三车间</option>
+          <option value="prod-floor-4">四车间</option>
+        </select>
+      </div>
+      <div>
+        <label for="family-description">家庭情况：</label>
+        <textarea name="" id="family-description" cols="30" rows="10">
+山东青岛即墨人，农村户口，一子一女，年总收入7万元</textarea
+        >
+      </div>
+      <div>
+        <label for="skills">特长：</label>
+        <section id="skills">
+          <div class="skill">
+            <input id="basketball" type="checkbox" value="basketball" />
+            <label for="basketball">篮球</label>
+          </div>
+          <div class="skill">
+            <input id="wielding" type="checkbox" value="wielding" />
+            <label for="wielding">电焊</label>
+          </div>
+          <div class="skill">
+            <input id="marketing" type="checkbox" value="marketing" />
+            <label for="marketing">产品推广</label>
+          </div>
+        </section>
+      </div>
+      <div>
+        <label for="submit-btn">
+          <input type="submit" value="提交" id="submit-btn" />
+        </label>
+        <input type="reset" value="重置" />
+      </div>
+    </form>
+  </body>
+</html>

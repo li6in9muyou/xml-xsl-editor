@@ -42,6 +42,39 @@
         padding: 2px;
       }
     </style>
+    <style>
+      #secondAssignmentTimetable {
+        background-color: lightyellow;
+        padding: 8px;
+        margin: auto;
+      }
+      .second-CourseTable {
+        margin: auto;
+        border: black 2px solid;
+        border-radius: 1rem;
+        padding: 12px;
+      }
+      .second-CourseTable--TimeAside {
+        max-width: 50px;
+        padding: 2px;
+      }
+      .second-CourseTable--Cell {
+        padding: 6px;
+        height: 2rem;
+        box-shadow: 2px 2px 1px gray;
+        cursor: pointer;
+      }
+      .popup {
+        display: none;
+        position: absolute;
+        padding: 5px;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        width: 200px;
+        background-color: antiquewhite;
+      }
+    </style>
   </head>
   <body>
     <section id="firstAssignment">
@@ -137,6 +170,120 @@
           <input type="reset" value="重置" />
         </div>
       </form>
+    </section>
+    <section id="secondAssignmentTimetable" data-second-assignment-section>
+      <div class="popup" data-popup></div>
+      <h1>第二次作业，课程表</h1>
+      <p>学习table元素和事件监听器的使用</p>
+      <table class="second-CourseTable">
+        <thead>
+          <tr>
+            <th scope="col" colspan="2"><h1>课程表</h1></th>
+          </tr>
+          <tr>
+            <th colspan="1" scope="col">时间表</th>
+            <th colspan="1" scope="col">星期六</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="second-CourseTable--TimeAside">
+              <span>第一节 08:00-08:45</span>
+            </td>
+            <td class="second-CourseTable--Cell" data-course-id="xml">
+              XML语言，敬信楼F11阶梯教室
+            </td>
+          </tr>
+          <tr>
+            <td class="second-CourseTable--TimeAside">
+              <span>第二节 08:50-09:35</span>
+            </td>
+            <td class="second-CourseTable--Cell" data-course-id="xml">
+              XML语言，敬信楼F11阶梯教室
+            </td>
+          </tr>
+          <tr>
+            <td class="second-CourseTable--TimeAside">
+              <span>第三节 09:55-11:40</span>
+            </td>
+            <td class="second-CourseTable--Cell" data-course-id="xml">
+              XML语言，敬信楼F11阶梯教室
+            </td>
+          </tr>
+          <tr>
+            <td class="second-CourseTable--TimeAside">
+              <span>第四节 10:45-11:30</span>
+            </td>
+            <td class="second-CourseTable--Cell" data-course-id="xml">
+              XML语言，敬信楼F11阶梯教室
+            </td>
+          </tr>
+          <tr>
+            <td class="second-CourseTable--TimeAside">
+              <span>第五节 11:35-12:20</span>
+            </td>
+            <td class="second-CourseTable--Cell" data-course-id="empty"></td>
+          </tr>
+          <tr>
+            <td class="second-CourseTable--TimeAside">
+              <span>第六节 13:30-14:15</span>
+            </td>
+            <td class="second-CourseTable--Cell" data-course-id="empty"></td>
+          </tr>
+          <tr>
+            <td class="second-CourseTable--TimeAside">
+              <span>第七节 14:20-15:05</span>
+            </td>
+            <td class="second-CourseTable--Cell" data-course-id="empty"></td>
+          </tr>
+        </tbody>
+      </table>
+      <script>
+        let prevAnchor = null;
+        const GetPopUpAnchor = () =>
+          document.querySelector("[data-popup-anchor]");
+        const POPUP = document.querySelector("[data-popup]");
+        const courseInfo = new Map([
+          ["xml", "这是XML语言课程的课程信息"],
+          ["empty", "本时间段没有课"],
+        ]);
+        function removePopUp() {
+          POPUP.style.display = "none";
+        }
+        function showPopUpFor(courseId, element) {
+          if (prevAnchor !== null) {
+            prevAnchor.removeAttribute("data-popup-anchor");
+          }
+          element.dataset.popupAnchor = "";
+          function showPopUp(text) {
+            POPUP.innerText = text;
+            POPUP.style.display = "block";
+            const popUpAnchor = GetPopUpAnchor();
+            popUpAnchor.style.position = "relative";
+            popUpAnchor.appendChild(POPUP);
+          }
+
+          const info = courseInfo.get(courseId);
+          if (info !== undefined) {
+            showPopUp(info);
+          } else {
+            showPopUp(`没有课程${courseId}的信息`);
+          }
+          prevAnchor = element;
+        }
+        function attachCourseInfoPopup() {
+          document.querySelectorAll("[data-course-id]").forEach((e) => {
+            e.addEventListener("click", (ev) => {
+              ev.stopPropagation();
+              showPopUpFor(e.dataset["courseId"], e);
+            });
+          });
+        }
+        window.addEventListener("load", attachCourseInfoPopup);
+        document
+          .querySelector("[data-second-assignment-section]")
+          .addEventListener("click", removePopUp);
+      </script>
     </section>
   </body>
 </html>

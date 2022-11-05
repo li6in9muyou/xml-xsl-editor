@@ -92,6 +92,22 @@
         padding: 10px;
       }
     </style>
+    <style>
+      #secondAssignmentUserCheckOutPage {
+        background-color: lightyellow;
+        padding: 8px;
+        margin-top: 2rem;
+      }
+      .second-CheckOutPage {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+      }
+      .second-CheckOutPageContainer {
+        display: flex;
+      }
+    </style>
   </head>
   <body>
     <section id="firstAssignment">
@@ -446,6 +462,102 @@
           a.click();
           window.URL.revokeObjectURL(url);
         }
+      </script>
+    </section>
+    <section id="secondAssignmentUserCheckOutPage">
+      <h1>第二次作业，检查用户输入，第二个</h1>
+      <p>检查用户输入并储存到本地文件</p>
+      <main class="second-CheckOutPageContainer">
+        <section class="second-CheckOutPage">
+          <label for="itemName">商品名称</label>
+          <select id="itemName" class="second-CheckOutPage--Item">
+            <option value="" disabled>选择商品</option>
+            <option value="mechanical-keyboard" selected>机械硬盘</option>
+            <option value="hard-disk-drive">机械键盘</option>
+            <option value="solid-state-drive">固态硬盘</option>
+            <option value="cheap-keyboard">硅胶碗键盘</option>
+          </select>
+          <div class="second-CheckOutPage--Price">
+            商品价格
+            <span data-item-price></span>
+          </div>
+          <label for="second-buy-count">
+            购买数量
+            <input
+              type="number"
+              id="second-buy-count"
+              data-second-buy-count
+              value="1"
+              min="1"
+            />
+          </label>
+          <label for="second-charge">
+            金额
+            <input
+              type="number"
+              id="second-charge"
+              data-second-charge
+              value="1"
+              min="1"
+            />
+          </label>
+          <button disabled data-submit-purchase>提交</button>
+        </section>
+        <aside class="second-UserInput--ErrorContainer">
+          <ul class="second-UserInput--Error" data-errors-list-checkout></ul>
+        </aside>
+      </main>
+      <script>
+        document.querySelector("[data-item-price]").innerText = "999";
+      </script>
+      <script>
+        (function () {
+          let global_msg = [],
+            msg = [];
+          const ERROR_LIST = document.querySelector(
+            "[data-errors-list-checkout]"
+          );
+          function renderErrorMessages(arr) {
+            ERROR_LIST.innerHTML = "";
+            for (const m of arr) {
+              const one_error = document.createElement("li");
+              one_error.classList.add("errors--error");
+              one_error.innerText = m;
+              ERROR_LIST.appendChild(one_error);
+            }
+          }
+          const validators = [
+            [
+              () => {
+                const number = Number(
+                  document.querySelector("[data-item-price]").innerHTML
+                );
+                const item_count = Number(
+                  document.querySelector("[data-second-buy-count]").value
+                );
+                const entered_pay = Number(
+                  document.querySelector("[data-second-charge]").value
+                );
+                return entered_pay === number * item_count;
+              },
+              "金额计算错误",
+            ],
+          ];
+          document
+            .querySelector("[data-second-charge]")
+            .addEventListener("input", (ev) => {
+              msg = [];
+              for (const v of validators) {
+                const [isValid, help] = v;
+                if (!isValid(ev.target.value)) {
+                  msg.push(help);
+                }
+              }
+              username_good = msg.length === 0;
+              renderErrorMessages([...global_msg, ...msg]);
+              update_button();
+            });
+        })();
       </script>
     </section>
   </body>

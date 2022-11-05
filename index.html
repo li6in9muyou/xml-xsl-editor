@@ -75,6 +75,23 @@
         background-color: antiquewhite;
       }
     </style>
+    <style>
+      #secondAssignmentUserInputValidation {
+        background-color: lightyellow;
+        padding: 8px;
+        margin-top: 2rem;
+      }
+      .second-UserInput {
+        padding: 10px;
+        display: flex;
+      }
+      .second-UserInput--Form {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 10px;
+      }
+    </style>
   </head>
   <body>
     <section id="firstAssignment">
@@ -283,6 +300,152 @@
         document
           .querySelector("[data-second-assignment-section]")
           .addEventListener("click", removePopUp);
+      </script>
+    </section>
+    <section id="secondAssignmentUserInputValidation">
+      <h1>第二次作业，检查用户输入</h1>
+      <p>检查用户输入并储存到本地文件</p>
+      <main class="second-UserInput">
+        <section class="second-UserInput--Form">
+          <label for="second-username">
+            输入用户名
+            <input
+              type="text"
+              id="second-username"
+              data-second-username-input
+            />
+          </label>
+          <label for="second-token">
+            输入口令
+            <input type="text" id="second-token" data-second-token-input />
+          </label>
+          <button disabled data-export-file>保存到本地文件</button>
+        </section>
+        <aside class="second-UserInput--ErrorContainer">
+          <ul class="second-UserInput--Error" data-errors-list></ul>
+        </aside>
+      </main>
+      <script>
+        let global_msg = [],
+          msg = [];
+        let username_good = false;
+        let token_good = false;
+        const ERROR_LIST = document.querySelector("[data-errors-list]");
+        function renderErrorMessages(arr) {
+          ERROR_LIST.innerHTML = "";
+          for (const m of arr) {
+            const one_error = document.createElement("li");
+            one_error.classList.add("errors--error");
+            one_error.innerText = m;
+            ERROR_LIST.appendChild(one_error);
+          }
+        }
+
+        const username_validators = [
+          [(s) => s === "username", "用户名只能为username"],
+        ];
+
+        function isDigit(ch) {
+          return "0987654321".includes(ch);
+        }
+
+        const token_validators = [
+          [
+            (s) => s.every((ch) => ch.charCodeAt(0) < 127),
+            "口令只能是 ASCII 字符",
+          ],
+          [(s) => s.length > 10, "口令要超过十个字符长度"],
+          [
+            (s) => s.some((ch) => !isDigit(ch) && ch === ch.toLowerCase()),
+            "口令中要有小写字母",
+          ],
+          [
+            (s) => s.some((ch) => !isDigit(ch) && ch === ch.toUpperCase()),
+            "口令中要有大写字母",
+          ],
+          [(s) => s.some(isDigit), "口令中要有数字"],
+        ];
+
+        document
+          .querySelector("[data-second-username-input]")
+          .addEventListener("input", (ev) => {
+            msg = [];
+            for (const v of username_validators) {
+              const [isValid, help] = v;
+              if (!isValid(ev.target.value)) {
+                msg.push(help);
+              }
+            }
+            username_good = msg.length === 0;
+            renderErrorMessages([...global_msg, ...msg]);
+            update_button();
+          });
+
+        function update_button() {
+          document.querySelector("[data-export-file]").disabled = !(
+            username_good && token_good
+          );
+        }
+
+        function prompt_user_input() {
+          global_msg = [];
+          if (!username_good) {
+            global_msg.push("请填好用户名");
+          }
+          if (!token_good) {
+            global_msg.push("请填好口令");
+          }
+          if (global_msg.length === 0) {
+            global_msg.push("你全部输入正确");
+          }
+          renderErrorMessages([...msg, ...global_msg]);
+        }
+
+        window.addEventListener("load", prompt_user_input);
+
+        document
+          .querySelector("[data-export-file]")
+          .addEventListener("click", () => {
+            saveAs([
+              "用户名：\n",
+              document.querySelector("[data-second-username-input]").value +
+                "\n",
+              "口令：\n",
+              document.querySelector("[data-second-token-input]").value + "\n",
+            ]);
+          });
+
+        document
+          .querySelector("[data-second-token-input]")
+          .addEventListener("input", (ev) => {
+            msg = [];
+            for (const v of token_validators) {
+              const [isValid, help] = v;
+              if (!isValid([...ev.target.value])) {
+                msg.push(help);
+              }
+            }
+            token_good = msg.length === 0;
+            renderErrorMessages([...global_msg, ...msg]);
+            update_button();
+          });
+        document
+          .querySelector("[data-second-token-input]")
+          .addEventListener("input", prompt_user_input);
+        document
+          .querySelector("[data-second-username-input]")
+          .addEventListener("input", prompt_user_input);
+
+        function saveAs(array) {
+          const url = window.URL.createObjectURL(new Blob(array));
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = `用户名和口令 ${new Date().toLocaleTimeString()}.txt`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        }
       </script>
     </section>
   </body>

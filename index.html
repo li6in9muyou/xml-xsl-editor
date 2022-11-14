@@ -108,6 +108,11 @@
         display: flex;
       }
     </style>
+    <style>
+      .third-ace-editor {
+        height: 500px;
+      }
+    </style>
   </head>
   <body>
     <section id="firstAssignment">
@@ -558,6 +563,139 @@
               update_button();
             });
         })();
+      </script>
+    </section>
+    <section id="hand-written-xml">
+      <h1>第三次作业，手写两个xml文件</h1>
+      <h2>第一个，学生成绩统计表</h2>
+      <p>实验原理：依葫芦画瓢，照猫画虎。</p>
+      <div id="third-ace-editor-one" class="third-ace-editor"></div>
+      <h2>第二个，班级通讯录</h2>
+      <p>实验原理：大胆设计，小心实现。</p>
+      <div id="third-ace-editor-two" class="third-ace-editor"></div>
+      <script
+        src="https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict/ace.min.js"
+        type="text/javascript"
+        charset="utf-8"
+      ></script>
+      <script>
+        const one = `<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE studentScores [
+
+<!ELEMENT studentScores (student+)>
+<!ELEMENT student (name,avg,courses)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT avg (#PCDATA)>
+<!ELEMENT courses (course*)>
+<!ELEMENT course (name, score)>
+<!ELEMENT score (#PCDATA)>
+]>
+<studentScores>
+  <student>
+    <name>张三</name>
+    <avg>85.67</avg>
+    <courses>
+      <course>
+        <name>编译方法</name>
+        <score>79</score>
+      </course>
+      <course>
+        <name>C程序设计</name>
+        <score>85</score>
+      </course>
+      <course>
+        <name>数据结构</name>
+        <score>93</score>
+      </course>
+    </courses>
+  </student>
+  <student>
+    <name>李四</name>
+    <avg>84.33</avg>
+    <courses>
+      <course>
+        <name>计算复杂性</name>
+        <score>72</score>
+      </course>
+      <course>
+        <name>偏微分方程</name>
+        <score>86</score>
+      </course>
+      <course>
+        <name>计算方法</name>
+        <score>95</score>
+      </course>
+    </courses>
+  </student>
+  <student>
+    <name>王五</name>
+    <avg>86.25</avg>
+    <courses>
+      <course>
+        <name>分子轨道理论</name>
+        <score>79</score>
+      </course>
+      <course>
+        <name>有机化学</name>
+        <score>80</score>
+      </course>
+      <course>
+        <name>分子生物学</name>
+        <score>88</score>
+      </course>
+      <course>
+        <name>无机化学</name>
+        <score>98</score>
+      </course>
+    </courses>
+  </student>
+</studentScores>`;
+        ace.config.set(
+          "basePath",
+          "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
+        );
+        var editor = ace.edit("third-ace-editor-one");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/xml");
+        editor.setValue(one);
+        editor.setReadOnly(true);
+
+        const twoText = `
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE contacts [
+<!ELEMENT contacts (contact+)>
+<!ELEMENT contact (handle, link)>
+<!ELEMENT handle (#PCDATA)>
+<!ELEMENT link (#PCDATA)>
+]>
+<contacts>
+<contact>
+    <handle>li6in9muyou</handle>
+    <link>blog.li6q.fun</link>
+</contact>
+<contact>
+    <handle>Physically Based Rendering</handle>
+    <link>www.pbrt.org</link>
+</contact>
+<contact>
+    <handle>Go</handle>
+    <link>go.dev</link>
+</contact>
+<contact>
+    <handle>OpenGL</handle>
+    <link>www.opengl.org</link>
+</contact>
+<contact>
+    <handle>JetBrains</handle>
+    <link>jetbrains.com</link>
+</contact>
+</contacts>
+`;
+        const two = ace.edit("third-ace-editor-two");
+        two.setTheme("ace/theme/monokai");
+        two.session.setMode("ace/mode/xml");
+        two.setValue(twoText);
+        two.setReadOnly(true);
       </script>
     </section>
   </body>

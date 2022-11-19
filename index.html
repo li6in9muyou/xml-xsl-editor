@@ -113,6 +113,11 @@
         height: 500px;
       }
     </style>
+    <style>
+      .fourth-ace-editor {
+        height: 500px;
+      }
+    </style>
   </head>
   <body>
     <section id="firstAssignment">
@@ -696,6 +701,523 @@
         two.session.setMode("ace/mode/xml");
         two.setValue(twoText);
         two.setReadOnly(true);
+      </script>
+    </section>
+    <section id="hand-written-xslt">
+      <h1>第四次作业，手写三个XSL模版</h1>
+      <h2>第一个，CD唱片目录</h2>
+      <p>实验原理：用 xsl:when 标签有条件地选择输出的片段</p>
+      <h3>XML数据</h3>
+      <div id="fourth-one-xml" class="fourth-ace-editor"></div>
+      <h3>XSL模版</h3>
+      <div id="fourth-one-xsl" class="fourth-ace-editor"></div>
+      <h2>第二个，学生成绩表输出为HTML</h2>
+      <p>
+        实验原理：用 rowspan 属性设置行宽度，用 xsl:variable
+        动态计算课程的数量以适应不同学生有不同数量的课程
+      </p>
+      <h3>XML数据</h3>
+      <div id="fourth-two-xml" class="fourth-ace-editor"></div>
+      <h3>XSL模版</h3>
+      <div id="fourth-two-xsl" class="fourth-ace-editor"></div>
+      <h2>第三个，会员信息XML定义和输出为HTML</h2>
+      <p>
+        实验原理：用 rowspan 属性设置行宽度，用 xsl:variable
+        动态计算课程的数量以适应不同学生有不同数量的课程
+      </p>
+      <h3>XML数据</h3>
+      <div id="fourth-three-xml" class="fourth-ace-editor"></div>
+      <h3>XSL模版</h3>
+      <div id="fourth-three-xsl" class="fourth-ace-editor"></div>
+      <script>
+        const oneXML = `<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+  <cd>
+    <title>Empire Burlesque</title>
+    <artist>Bob Dylan</artist>
+    <country>USA</country>
+    <company>Columbia</company>
+    <price>10.90</price>
+    <year>1985</year>
+  </cd>
+  <cd>
+    <title>Hide your heart</title>
+    <artist>Bonnie Tyler</artist>
+    <country>UK</country>
+    <company>CBS Records</company>
+    <price>9.90</price>
+    <year>1988</year>
+  </cd>
+  <cd>
+    <title>Greatest Hits</title>
+    <artist>Dolly Parton</artist>
+    <country>USA</country>
+    <company>RCA</company>
+    <price>9.90</price>
+    <year>1982</year>
+  </cd>
+  <cd>
+    <title>Still got the blues</title>
+    <artist>Gary Moore</artist>
+    <country>UK</country>
+    <company>Virgin records</company>
+    <price>10.20</price>
+    <year>1990</year>
+  </cd>
+  <cd>
+    <title>Eros</title>
+    <artist>Eros Ramazzotti</artist>
+    <country>EU</country>
+    <company>BMG</company>
+    <price>9.90</price>
+    <year>1997</year>
+  </cd>
+  <cd>
+    <title>One night only</title>
+    <artist>Bee Gees</artist>
+    <country>UK</country>
+    <company>Polydor</company>
+    <price>10.90</price>
+    <year>1998</year>
+  </cd>
+  <cd>
+    <title>Sylvias Mother</title>
+    <artist>Dr.Hook</artist>
+    <country>UK</country>
+    <company>CBS</company>
+    <price>8.10</price>
+    <year>1973</year>
+  </cd>
+  <cd>
+    <title>Maggie May</title>
+    <artist>Rod Stewart</artist>
+    <country>UK</country>
+    <company>Pickwick</company>
+    <price>8.50</price>
+    <year>1990</year>
+  </cd>
+  <cd>
+    <title>Romanza</title>
+    <artist>Andrea Bocelli</artist>
+    <country>EU</country>
+    <company>Polydor</company>
+    <price>10.80</price>
+    <year>1996</year>
+  </cd>
+  <cd>
+    <title>When a man loves a woman</title>
+    <artist>Percy Sledge</artist>
+    <country>USA</country>
+    <company>Atlantic</company>
+    <price>8.70</price>
+    <year>1987</year>
+  </cd>
+  <cd>
+    <title>Black angel</title>
+    <artist>Savage Rose</artist>
+    <country>EU</country>
+    <company>Mega</company>
+    <price>10.90</price>
+    <year>1995</year>
+  </cd>
+  <cd>
+    <title>1999 Grammy Nominees</title>
+    <artist>Many</artist>
+    <country>USA</country>
+    <company>Grammy</company>
+    <price>10.20</price>
+    <year>1999</year>
+  </cd>
+  <cd>
+    <title>For the good times</title>
+    <artist>Kenny Rogers</artist>
+    <country>UK</country>
+    <company>Mucik Master</company>
+    <price>8.70</price>
+    <year>1995</year>
+  </cd>
+  <cd>
+    <title>Big Willie style</title>
+    <artist>Will Smith</artist>
+    <country>USA</country>
+    <company>Columbia</company>
+    <price>9.90</price>
+    <year>1997</year>
+  </cd>
+  <cd>
+    <title>Tupelo Honey</title>
+    <artist>Van Morrison</artist>
+    <country>UK</country>
+    <company>Polydor</company>
+    <price>8.20</price>
+    <year>1971</year>
+  </cd>
+  <cd>
+    <title>Soulsville</title>
+    <artist>Jorn Hoel</artist>
+    <country>Norway</country>
+    <company>WEA</company>
+    <price>7.90</price>
+    <year>1996</year>
+  </cd>
+  <cd>
+    <title>The very best of</title>
+    <artist>Cat Stevens</artist>
+    <country>UK</country>
+    <company>Island</company>
+    <price>8.90</price>
+    <year>1990</year>
+  </cd>
+  <cd>
+    <title>Stop</title>
+    <artist>Sam Brown</artist>
+    <country>UK</country>
+    <company>A and M</company>
+    <price>8.90</price>
+    <year>1988</year>
+  </cd>
+  <cd>
+    <title>Bridge of Spies</title>
+    <artist>T\`Pau</artist>
+    <country>UK</country>
+    <company>Siren</company>
+    <price>7.90</price>
+    <year>1987</year>
+  </cd>
+  <cd>
+    <title>Private Dancer</title>
+    <artist>Tina Turner</artist>
+    <country>UK</country>
+    <company>Capitol</company>
+    <price>8.90</price>
+    <year>1983</year>
+  </cd>
+  <cd>
+    <title>Midt om natten</title>
+    <artist>Kim Larsen</artist>
+    <country>EU</country>
+    <company>Medley</company>
+    <price>7.80</price>
+    <year>1983</year>
+  </cd>
+  <cd>
+    <title>Pavarotti Gala Concert</title>
+    <artist>Luciano Pavarotti</artist>
+    <country>UK</country>
+    <company>DECCA</company>
+    <price>9.90</price>
+    <year>1991</year>
+  </cd>
+  <cd>
+    <title>The dock of the bay</title>
+    <artist>Otis Redding</artist>
+    <country>USA</country>
+    <company>Stax Records</company>
+    <price>7.90</price>
+    <year>1968</year>
+  </cd>
+  <cd>
+    <title>Picture book</title>
+    <artist>Simply Red</artist>
+    <country>EU</country>
+    <company>Elektra</company>
+    <price>7.20</price>
+    <year>1985</year>
+  </cd>
+  <cd>
+    <title>Red</title>
+    <artist>The Communards</artist>
+    <country>UK</country>
+    <company>London</company>
+    <price>7.80</price>
+    <year>1987</year>
+  </cd>
+  <cd>
+    <title>Unchain my heart</title>
+    <artist>Joe Cocker</artist>
+    <country>USA</country>
+    <company>EMI</company>
+    <price>8.20</price>
+    <year>1987</year>
+  </cd>
+</catalog>`;
+        const oneXSL = `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="/">
+<html>
+<body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th style="text-align:left">Title</th>
+      <th style="text-align:left">Artist</th>
+      <th style="text-align:left">Price</th>
+      <th style="text-align:left">Year</th>
+    </tr>
+    <xsl:for-each select="catalog/cd[year>1980]">
+      <xsl:sort select="year" data-type="number" order="descending"/>
+    <tr>
+      <td><xsl:value-of select="title"/></td>
+      <td><xsl:value-of select="artist"/></td>
+<xsl:choose>
+<xsl:when test="price &lt; 8">
+        <td bgcolor="#00ffff">
+          <xsl:value-of select="price"/>
+        </td>
+</xsl:when >
+<xsl:when test="price &gt; 10">
+        <td bgcolor="#ff0000">
+          <xsl:value-of select="price"/>
+        </td>
+</xsl:when>
+<xsl:when test="price &gt; 9">
+        <td bgcolor="#ff8000">
+          <xsl:value-of select="price"/>
+        </td>
+</xsl:when>
+<xsl:when test="price &gt; 8">
+        <td bgcolor="#ffc0cb">
+          <xsl:value-of select="price"/>
+        </td>
+</xsl:when >
+</xsl:choose>
+<td><xsl:value-of select="year"/></td>
+    </tr>
+    </xsl:for-each>
+  </table>
+</body>
+</html>
+</xsl:template>
+</xsl:stylesheet>`;
+        const twoXML = `<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE studentScores [
+<!ELEMENT studentScores (student+)>
+<!ELEMENT student (name,avg,courses)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT avg (#PCDATA)>
+<!ELEMENT courses (course*)>
+<!ELEMENT course (name, score, modifiedDate)>
+<!ELEMENT score (#PCDATA)>
+<!ELEMENT modifiedDate (#PCDATA)>
+]>
+<studentScores>
+  <student>
+    <name>张三</name>
+    <avg>85.67</avg>
+    <courses>
+      <course>
+        <name>编译方法</name>
+        <score>79</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+      <course>
+        <name>C程序设计</name>
+        <score>85</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+      <course>
+        <name>数据结构</name>
+        <score>93</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+    </courses>
+  </student>
+  <student>
+    <name>李四</name>
+    <avg>84.33</avg>
+    <courses>
+      <course>
+        <name>计算复杂性</name>
+        <score>72</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+      <course>
+        <name>偏微分方程</name>
+        <score>86</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+      <course>
+        <name>计算方法</name>
+        <score>95</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+    </courses>
+  </student>
+  <student>
+    <name>王五</name>
+    <avg>86.25</avg>
+    <courses>
+      <course>
+        <name>分子轨道理论</name>
+        <score>79</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+      <course>
+        <name>有机化学</name>
+        <score>80</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+      <course>
+        <name>分子生物学</name>
+        <score>88</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+      <course>
+        <name>无机化学</name>
+        <score>98</score>
+<modifiedDate>2021/12/06</modifiedDate>
+      </course>
+    </courses>
+  </student>
+</studentScores>`;
+        const twoXSL = `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="/">
+<html>
+<body>
+  <h2>学生成绩表</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th style="text-align:left">姓名</th>
+      <th style="text-align:left">平均成绩</th>
+      <th style="text-align:left">课程名称</th>
+      <th style="text-align:left">单科成绩</th>
+      <th style="text-align:left">录入时间</th>
+    </tr>
+<xsl:for-each select="studentScores/student">
+<xsl:variable name="rspan" select="count(courses/course)"></xsl:variable>
+<tr>
+  <th rowspan="{$rspan+1}"><xsl:value-of select="name"/></th>
+  <th rowspan="{$rspan+1}"><xsl:value-of select="avg"/></th>
+</tr>
+    <xsl:for-each select="courses/course">
+<tr>
+      <td><xsl:value-of select="name"/></td>
+      <td><xsl:value-of select="score"/></td>
+      <td><xsl:value-of select="modifiedDate"/></td>
+</tr>
+    </xsl:for-each>
+
+</xsl:for-each>
+  </table>
+</body>
+</html>
+</xsl:template>
+</xsl:stylesheet>`;
+        const threeXML = `<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE members [
+<!ELEMENT members (member+)>
+<!ELEMENT member (name,id,gender,addr,telephones)>
+<!ELEMENT telephones (telephoneNumber, telephoneType)>
+<!ELEMENT telephoneNumber (#PCDATA)>
+<!ELEMENT telephoneType (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT gender (#PCDATA)>
+<!ELEMENT addr (#PCDATA)>
+]>
+
+<members>
+<member>
+
+<name>李倩倩</name>
+<id>10191101</id>
+<gender>女</gender>
+<addr>前卫胡同126号</addr>
+<telephones>
+<telephone>
+<telephoneNumber>
+88662255
+</telephoneNumber>
+<telephoneType>
+住宅
+</telephoneType>
+</telephone>
+<telephone>
+<telephoneNumber>
+13012345678
+</telephoneNumber>
+<telephoneType>
+移动电话
+</telephoneType>
+</telephone>
+</telephones>
+</member>
+
+<member>
+<name>王晓明</name>
+<id>10191203</id>
+<gender>男</gender>
+<addr>北京大街103号</addr>
+<telephones>
+<telephone>
+<telephoneNumber>
+85943212
+</telephoneNumber>
+<telephoneType>
+办公
+</telephoneType>
+</telephone>
+</telephones>
+</member>
+</members>`;
+        const threeXSL = `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="/">
+<html>
+<body>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th style="text-align:left">姓名</th>
+      <th style="text-align:left">会员编号</th>
+      <th style="text-align:left">性别</th>
+      <th style="text-align:left">地址</th>
+      <th style="text-align:left">电话号码</th>
+      <th style="text-align:left">电话类型</th>
+    </tr>
+<xsl:for-each select="members/member">
+<xsl:variable name="rspan" select="count(telephones/telephone)"></xsl:variable>
+<tr>
+  <th rowspan="{$rspan+1}"><xsl:value-of select="name"/></th>
+  <th rowspan="{$rspan+1}"><xsl:value-of select="id"/></th>
+  <th rowspan="{$rspan+1}"><xsl:value-of select="gender"/></th>
+  <th rowspan="{$rspan+1}"><xsl:value-of select="addr"/></th>
+</tr>
+    <xsl:for-each select="telephones/telephone">
+<tr>
+      <td><xsl:value-of select="telephoneNumber"/></td>
+      <td><xsl:value-of select="telephoneType"/></td>
+</tr>
+    </xsl:for-each>
+
+</xsl:for-each>
+  </table>
+</body>
+</html>
+</xsl:template>
+</xsl:stylesheet>`;
+      </script>
+      <script>
+        ace.config.set(
+          "basePath",
+          "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
+        );
+        (() => {
+          function genEditor(text, id) {
+            const e = ace.edit(id);
+            e.setTheme("ace/theme/monokai");
+            e.session.setMode("ace/mode/xml");
+            e.session.setValue(text);
+            e.setReadOnly(true);
+          }
+
+          genEditor(oneXML, "fourth-one-xml");
+          genEditor(oneXSL, "fourth-one-xsl");
+          genEditor(twoXML, "fourth-two-xml");
+          genEditor(twoXSL, "fourth-two-xsl");
+          genEditor(threeXML, "fourth-three-xml");
+          genEditor(threeXSL, "fourth-three-xsl");
+        })();
       </script>
     </section>
   </body>

@@ -662,7 +662,7 @@
         var editor = ace.edit("third-ace-editor-one");
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/xml");
-        editor.setValue(one);
+        editor.session.setValue(one);
         editor.setReadOnly(true);
 
         const twoText = `
@@ -699,7 +699,7 @@
         const two = ace.edit("third-ace-editor-two");
         two.setTheme("ace/theme/monokai");
         two.session.setMode("ace/mode/xml");
-        two.setValue(twoText);
+        two.session.setValue(twoText);
         two.setReadOnly(true);
       </script>
     </section>

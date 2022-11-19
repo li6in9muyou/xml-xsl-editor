@@ -1126,20 +1126,12 @@
 <addr>前卫胡同126号</addr>
 <telephones>
 <telephone>
-<telephoneNumber>
-88662255
-</telephoneNumber>
-<telephoneType>
-住宅
-</telephoneType>
+<telephoneNumber>88662255</telephoneNumber>
+<telephoneType>住宅</telephoneType>
 </telephone>
 <telephone>
-<telephoneNumber>
-13012345678
-</telephoneNumber>
-<telephoneType>
-移动电话
-</telephoneType>
+<telephoneNumber>13012345678</telephoneNumber>
+<telephoneType>移动电话</telephoneType>
 </telephone>
 </telephones>
 </member>
@@ -1151,12 +1143,8 @@
 <addr>北京大街103号</addr>
 <telephones>
 <telephone>
-<telephoneNumber>
-85943212
-</telephoneNumber>
-<telephoneType>
-办公
-</telephoneType>
+<telephoneNumber>85943212</telephoneNumber>
+<telephoneType>办公</telephoneType>
 </telephone>
 </telephones>
 </member>
@@ -1197,17 +1185,19 @@
 </xsl:template>
 </xsl:stylesheet>`;
       </script>
+      <script src="https://cdn.jsdelivr.net/npm/xml-beautify@1.2.3/dist/XmlBeautify.js"></script>
       <script>
         ace.config.set(
           "basePath",
           "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
         );
+        const B = new XmlBeautify();
         (() => {
           function genEditor(text, id) {
             const e = ace.edit(id);
             e.setTheme("ace/theme/monokai");
             e.session.setMode("ace/mode/xml");
-            e.session.setValue(text);
+            e.session.setValue(B.beautify(text));
             e.setReadOnly(true);
           }
 

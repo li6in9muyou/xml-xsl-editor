@@ -1210,5 +1210,71 @@
         })();
       </script>
     </section>
+    <section id="interactiveXML">
+      <h1>第五次作业，交互式XSL渲染</h1>
+      <p>
+        先要在XSL文档中做一个专门用来渲染student节点的模版。具体看
+        <a href="https://github.com/li6in9muyou/xml-course/commit/16efeed7">
+          这个提交 </a
+        >。 在JavaScript环境下用document.evaluate()来执行XPath检索。
+        用XSLTProcessor来执行转换，用DOMParser来解析XML和XSLT文档。
+        按照学生的姓名检索XML文档树，检索到了后用XSL来转换，最后插入到HTML文档树中。
+      </p>
+      <main>
+        <label>
+          姓名
+          <select data-select-student></select>
+        </label>
+        <div data-fifth-display></div>
+      </main>
+      <script>
+        const fifth_display = document.querySelector("[data-fifth-display]");
+        const xmlText = twoXML;
+        const xslText = twoXSL;
+        const display = document.getElementById("fifth-display");
+        const select_student_control = document.querySelector(
+          "[data-select-student]"
+        );
+
+        const p = new DOMParser();
+        const xml = p.parseFromString(xmlText, "application/xml");
+        const xsl = p.parseFromString(xslText, "application/xml");
+        const trans = new XSLTProcessor();
+        trans.importStylesheet(xsl);
+        const it = xml.evaluate(
+          "studentScores/student/name/text()",
+          xml,
+          null,
+          XPathResult.ORDERED_NODE_ITERATOR_TYPE,
+          null
+        );
+        const first = it.iterateNext();
+        renderOneStudent(first.data);
+        for (let name = first; name != null; name = it.iterateNext()) {
+          const op = document.createElement("option");
+          op.value = name.data;
+          op.innerText = name.data;
+          select_student_control.appendChild(op);
+        }
+        function getStudentByName(name) {
+          return xml.evaluate(
+            `studentScores/student[name = '${name}']`,
+            xml,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE,
+            null
+          )?.singleNodeValue;
+        }
+        function renderOneStudent(name) {
+          fifth_display.replaceChildren(
+            trans.transformToFragment(getStudentByName(name), document)
+          );
+        }
+        select_student_control.addEventListener("change", (e) => {
+          const name = e.target.value;
+          renderOneStudent(name);
+        });
+      </script>
+    </section>
   </body>
 </html>

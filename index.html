@@ -11,16 +11,15 @@
     </style>
   </head>
   <body>
-    <section id="hand-written-xslt">
-      <h1>XML、XSL编辑器</h1>
-      <h3>XML数据</h3>
-      <div id="xml" class="editor"></div>
-      <h3>XSL模版</h3>
-      <div id="xsl" class="editor"></div>
-      <h3>输出的HTML预览（试试修改上面的代码，实时更新！）</h3>
-      <div id="preview"></div>
-      <script>
-        const oneXML = `<?xml version="1.0" encoding="UTF-8"?>
+    <h1>XML、XSL编辑器</h1>
+    <h3>XML数据</h3>
+    <div id="xml" class="editor"></div>
+    <h3>XSL模版</h3>
+    <div id="xsl" class="editor"></div>
+    <h3>输出的HTML预览（试试修改上面的代码，实时更新！）</h3>
+    <div id="preview"></div>
+    <script>
+      const oneXML = `<?xml version="1.0" encoding="UTF-8"?>
 <catalog>
   <cd>
     <title>Empire Burlesque</title>
@@ -231,7 +230,7 @@
     <year>1987</year>
   </cd>
 </catalog>`;
-        const oneXSL = `<?xml version="1.0" encoding="UTF-8"?>
+      const oneXSL = `<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="/">
 <html>
@@ -249,58 +248,57 @@
 </html>
 </xsl:template>
 </xsl:stylesheet>`;
-      </script>
-      <script
-        src="https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict/ace.min.js"
-        type="text/javascript"
-        charset="utf-8"
-      ></script>
-      <script src="https://cdn.jsdelivr.net/npm/xml-beautify@1.2.3/dist/XmlBeautify.js"></script>
-      <script>
-        function renderPreview(xmlText, xslText, previewSelector) {
-          const p = new DOMParser();
-          const xml = p.parseFromString(xmlText, "application/xml");
-          const xsl = p.parseFromString(xslText, "application/xml");
-          const trans = new XSLTProcessor();
-          trans.importStylesheet(xsl);
-          const nodes = trans.transformToFragment(xml, document);
-          document.querySelector(previewSelector).replaceChildren(nodes);
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict/ace.min.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/xml-beautify@1.2.3/dist/XmlBeautify.js"></script>
+    <script>
+      function renderPreview(xmlText, xslText, previewSelector) {
+        const p = new DOMParser();
+        const xml = p.parseFromString(xmlText, "application/xml");
+        const xsl = p.parseFromString(xslText, "application/xml");
+        const trans = new XSLTProcessor();
+        trans.importStylesheet(xsl);
+        const nodes = trans.transformToFragment(xml, document);
+        document.querySelector(previewSelector).replaceChildren(nodes);
+      }
+    </script>
+    <script>
+      ace.config.set(
+        "basePath",
+        "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
+      );
+      const B = new XmlBeautify();
+      (() => {
+        function genEditor(text, id) {
+          const e = ace.edit(id);
+          e.setTheme("ace/theme/monokai");
+          e.session.setMode("ace/mode/xml");
+          e.session.setValue(B.beautify(text));
+          return e;
         }
-      </script>
-      <script>
-        ace.config.set(
-          "basePath",
-          "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
+
+        function genXmlXslPreview(xmlEdit, xslEdit, previewSelector) {
+          const cb = () =>
+            renderPreview(
+              xmlEdit.getValue(),
+              xslEdit.getValue(),
+              previewSelector
+            );
+          cb();
+          xmlEdit.session.on("change", cb);
+          xslEdit.session.on("change", cb);
+        }
+
+        genXmlXslPreview(
+          genEditor(oneXML, "xml"),
+          genEditor(oneXSL, "xsl"),
+          "#preview"
         );
-        const B = new XmlBeautify();
-        (() => {
-          function genEditor(text, id) {
-            const e = ace.edit(id);
-            e.setTheme("ace/theme/monokai");
-            e.session.setMode("ace/mode/xml");
-            e.session.setValue(B.beautify(text));
-            return e;
-          }
-
-          function genXmlXslPreview(xmlEdit, xslEdit, previewSelector) {
-            const cb = () =>
-              renderPreview(
-                xmlEdit.getValue(),
-                xslEdit.getValue(),
-                previewSelector
-              );
-            cb();
-            xmlEdit.session.on("change", cb);
-            xslEdit.session.on("change", cb);
-          }
-
-          genXmlXslPreview(
-            genEditor(oneXML, "xml"),
-            genEditor(oneXSL, "xsl"),
-            "#preview"
-          );
-        })();
-      </script>
-    </section>
+      })();
+    </script>
   </body>
 </html>

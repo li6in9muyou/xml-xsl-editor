@@ -243,36 +243,6 @@
       <th style="text-align:left">Price</th>
       <th style="text-align:left">Year</th>
     </tr>
-    <xsl:for-each select="catalog/cd[year>1980]">
-      <xsl:sort select="year" data-type="number" order="descending"/>
-    <tr>
-      <td><xsl:value-of select="title"/></td>
-      <td><xsl:value-of select="artist"/></td>
-<xsl:choose>
-<xsl:when test="price &gt; 10">
-        <td bgcolor="#ff0000">
-          <xsl:value-of select="price"/>
-        </td>
-</xsl:when>
-<xsl:when test="price &gt; 9">
-        <td bgcolor="#ff8000">
-          <xsl:value-of select="price"/>
-        </td>
-</xsl:when>
-<xsl:when test="price &gt; 8">
-        <td bgcolor="#ffc0cb">
-          <xsl:value-of select="price"/>
-        </td>
-</xsl:when >
-<xsl:when test="1">
-        <td bgcolor="#00ffff">
-          <xsl:value-of select="price"/>
-        </td>
-</xsl:when >
-</xsl:choose>
-<td><xsl:value-of select="year"/></td>
-    </tr>
-    </xsl:for-each>
   </table>
 </body>
 </html>

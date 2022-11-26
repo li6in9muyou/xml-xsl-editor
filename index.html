@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <title>XML、XSL编辑器</title>
     <style>
-      .fourth-ace-editor {
+      .editor {
         height: 500px;
+        max-width: 500px;
       }
     </style>
   </head>
@@ -13,11 +14,11 @@
     <section id="hand-written-xslt">
       <h1>XML、XSL编辑器</h1>
       <h3>XML数据</h3>
-      <div id="fourth-one-xml" class="fourth-ace-editor"></div>
+      <div id="xml" class="editor"></div>
       <h3>XSL模版</h3>
-      <div id="fourth-one-xsl" class="fourth-ace-editor"></div>
+      <div id="xsl" class="editor"></div>
       <h3>输出的HTML预览（试试修改上面的代码，实时更新！）</h3>
-      <div id="fourth-one-preview"></div>
+      <div id="preview"></div>
       <script>
         const oneXML = `<?xml version="1.0" encoding="UTF-8"?>
 <catalog>
@@ -294,9 +295,9 @@
           }
 
           genXmlXslPreview(
-            genEditor(oneXML, "fourth-one-xml"),
-            genEditor(oneXSL, "fourth-one-xsl"),
-            "#fourth-one-preview"
+            genEditor(oneXML, "xml"),
+            genEditor(oneXSL, "xsl"),
+            "#preview"
           );
         })();
       </script>

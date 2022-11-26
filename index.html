@@ -1072,6 +1072,20 @@
 </studentScores>`;
         const twoXSL = `<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="student">
+  <xsl:variable name="rspan" select="count(courses/course)"></xsl:variable>
+  <tr>
+    <th rowspan="{$rspan+1}"><xsl:value-of select="name"/></th>
+    <th rowspan="{$rspan+1}"><xsl:value-of select="avg"/></th>
+  </tr>
+  <xsl:for-each select="courses/course">
+    <tr>
+      <td><xsl:value-of select="name"/></td>
+      <td><xsl:value-of select="score"/></td>
+      <td><xsl:value-of select="modifiedDate"/></td>
+    </tr>
+  </xsl:for-each>
+</xsl:template>
 <xsl:template match="/">
 <html>
 <body>
@@ -1084,21 +1098,7 @@
       <th style="text-align:left">单科成绩</th>
       <th style="text-align:left">录入时间</th>
     </tr>
-<xsl:for-each select="studentScores/student">
-<xsl:variable name="rspan" select="count(courses/course)"></xsl:variable>
-<tr>
-  <th rowspan="{$rspan+1}"><xsl:value-of select="name"/></th>
-  <th rowspan="{$rspan+1}"><xsl:value-of select="avg"/></th>
-</tr>
-    <xsl:for-each select="courses/course">
-<tr>
-      <td><xsl:value-of select="name"/></td>
-      <td><xsl:value-of select="score"/></td>
-      <td><xsl:value-of select="modifiedDate"/></td>
-</tr>
-    </xsl:for-each>
-
-</xsl:for-each>
+    <xsl:apply-templates/>
   </table>
 </body>
 </html>

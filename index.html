@@ -720,6 +720,8 @@
       <div id="fourth-one-xml" class="fourth-ace-editor"></div>
       <h3>XSL模版</h3>
       <div id="fourth-one-xsl" class="fourth-ace-editor"></div>
+      <h3>输出的HTML预览</h3>
+      <div id="fourth-one-preview"></div>
       <h2>第二个，学生成绩表输出为HTML</h2>
       <p>
         实验原理：用 rowspan 属性设置行宽度，用 xsl:variable
@@ -729,6 +731,8 @@
       <div id="fourth-two-xml" class="fourth-ace-editor"></div>
       <h3>XSL模版</h3>
       <div id="fourth-two-xsl" class="fourth-ace-editor"></div>
+      <h3>输出的HTML预览</h3>
+      <div id="fourth-two-preview"></div>
       <h2>第三个，会员信息XML定义和输出为HTML</h2>
       <p>
         实验原理：用 rowspan 属性设置行宽度，用 xsl:variable
@@ -738,6 +742,8 @@
       <div id="fourth-three-xml" class="fourth-ace-editor"></div>
       <h3>XSL模版</h3>
       <div id="fourth-three-xsl" class="fourth-ace-editor"></div>
+      <h3>输出的HTML预览</h3>
+      <div id="fourth-three-preview"></div>
       <script>
         const oneXML = `<?xml version="1.0" encoding="UTF-8"?>
 <catalog>
@@ -1196,6 +1202,17 @@
       </script>
       <script src="https://cdn.jsdelivr.net/npm/xml-beautify@1.2.3/dist/XmlBeautify.js"></script>
       <script>
+        function renderPreview(xmlText, xslText, previewSelector) {
+          const p = new DOMParser();
+          const xml = p.parseFromString(xmlText, "application/xml");
+          const xsl = p.parseFromString(xslText, "application/xml");
+          const trans = new XSLTProcessor();
+          trans.importStylesheet(xsl);
+          const nodes = trans.transformToFragment(xml, document);
+          document.querySelector(previewSelector).replaceChildren(nodes);
+        }
+      </script>
+      <script>
         ace.config.set(
           "basePath",
           "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
@@ -1207,15 +1224,36 @@
             e.setTheme("ace/theme/monokai");
             e.session.setMode("ace/mode/xml");
             e.session.setValue(B.beautify(text));
-            e.setReadOnly(true);
+            return e;
           }
 
-          genEditor(oneXML, "fourth-one-xml");
-          genEditor(oneXSL, "fourth-one-xsl");
-          genEditor(twoXML, "fourth-two-xml");
-          genEditor(twoXSL, "fourth-two-xsl");
-          genEditor(threeXML, "fourth-three-xml");
-          genEditor(threeXSL, "fourth-three-xsl");
+          function genXmlXslPreview(xmlEdit, xslEdit, previewSelector) {
+            const cb = () =>
+              renderPreview(
+                xmlEdit.getValue(),
+                xslEdit.getValue(),
+                previewSelector
+              );
+            cb();
+            xmlEdit.session.on("change", cb);
+            xslEdit.session.on("change", cb);
+          }
+
+          genXmlXslPreview(
+            genEditor(oneXML, "fourth-one-xml"),
+            genEditor(oneXSL, "fourth-one-xsl"),
+            "#fourth-one-preview"
+          );
+          genXmlXslPreview(
+            genEditor(twoXML, "fourth-two-xml"),
+            genEditor(twoXSL, "fourth-two-xsl"),
+            "#fourth-two-preview"
+          );
+          genXmlXslPreview(
+            genEditor(threeXML, "fourth-three-xml"),
+            genEditor(threeXSL, "fourth-three-xsl"),
+            "#fourth-three-preview"
+          );
         })();
       </script>
     </section>

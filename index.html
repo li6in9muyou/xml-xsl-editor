@@ -6,16 +6,28 @@
     <style>
       .editor {
         height: 500px;
+        min-width: 500px;
         max-width: 500px;
+      }
+      .editors {
+        display: flex;
+        gap: 1rem;
+        height: 500px;
       }
     </style>
   </head>
   <body>
     <h1>XML、XSL编辑器</h1>
-    <h3>XML数据</h3>
-    <div id="xml" class="editor"></div>
-    <h3>XSL模版</h3>
-    <div id="xsl" class="editor"></div>
+    <main class="editors">
+      <section>
+        <h3>XML数据</h3>
+        <div id="xml" class="editor"></div>
+      </section>
+      <section>
+        <h3>XSL模版</h3>
+        <div id="xsl" class="editor"></div>
+      </section>
+    </main>
     <h3>输出的HTML预览（试试修改上面的代码，实时更新！）</h3>
     <div id="preview"></div>
     <script>

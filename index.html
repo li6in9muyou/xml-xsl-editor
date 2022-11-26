@@ -975,11 +975,6 @@
       <td><xsl:value-of select="title"/></td>
       <td><xsl:value-of select="artist"/></td>
 <xsl:choose>
-<xsl:when test="price &lt; 8">
-        <td bgcolor="#00ffff">
-          <xsl:value-of select="price"/>
-        </td>
-</xsl:when >
 <xsl:when test="price &gt; 10">
         <td bgcolor="#ff0000">
           <xsl:value-of select="price"/>
@@ -992,6 +987,11 @@
 </xsl:when>
 <xsl:when test="price &gt; 8">
         <td bgcolor="#ffc0cb">
+          <xsl:value-of select="price"/>
+        </td>
+</xsl:when >
+<xsl:when test="1">
+        <td bgcolor="#00ffff">
           <xsl:value-of select="price"/>
         </td>
 </xsl:when >

@@ -127,8 +127,6 @@
       }
 
       function saveToLocalStorage() {
-        formatXMLXSL(xmlEdit);
-        formatXMLXSL(xslEdit);
         localStorage.setItem(`${STORAGE_PREFIX}-xml`, xmlEdit.getValue());
         localStorage.setItem(`${STORAGE_PREFIX}-xsl`, xslEdit.getValue());
       }
@@ -141,13 +139,11 @@
         const savedXML = localStorage.getItem(`${STORAGE_PREFIX}-xml`);
         if (!isEmpty(savedXML)) {
           xmlEdit.setValue(savedXML);
-          formatXMLXSL(xmlEdit);
         }
 
         const savedXSL = localStorage.getItem(`${STORAGE_PREFIX}-xsl`);
         if (!isEmpty(savedXML)) {
           xslEdit.setValue(savedXSL);
-          formatXMLXSL(xslEdit);
         }
       }
 

@@ -36,235 +36,62 @@
     <h3>输出的HTML预览（试试修改上面的代码，实时更新！）</h3>
     <div id="preview"></div>
     <script>
-      const oneXML = `<?xml version="1.0" encoding="UTF-8"?>
-<catalog>
-  <cd>
-    <title>Empire Burlesque</title>
-    <artist>Bob Dylan</artist>
-    <country>USA</country>
-    <company>Columbia</company>
-    <price>10.90</price>
-    <year>1985</year>
-  </cd>
-  <cd>
-    <title>Hide your heart</title>
-    <artist>Bonnie Tyler</artist>
-    <country>UK</country>
-    <company>CBS Records</company>
-    <price>9.90</price>
-    <year>1988</year>
-  </cd>
-  <cd>
-    <title>Greatest Hits</title>
-    <artist>Dolly Parton</artist>
-    <country>USA</country>
-    <company>RCA</company>
-    <price>9.90</price>
-    <year>1982</year>
-  </cd>
-  <cd>
-    <title>Still got the blues</title>
-    <artist>Gary Moore</artist>
-    <country>UK</country>
-    <company>Virgin records</company>
-    <price>10.20</price>
-    <year>1990</year>
-  </cd>
-  <cd>
-    <title>Eros</title>
-    <artist>Eros Ramazzotti</artist>
-    <country>EU</country>
-    <company>BMG</company>
-    <price>9.90</price>
-    <year>1997</year>
-  </cd>
-  <cd>
-    <title>One night only</title>
-    <artist>Bee Gees</artist>
-    <country>UK</country>
-    <company>Polydor</company>
-    <price>10.90</price>
-    <year>1998</year>
-  </cd>
-  <cd>
-    <title>Sylvias Mother</title>
-    <artist>Dr.Hook</artist>
-    <country>UK</country>
-    <company>CBS</company>
-    <price>8.10</price>
-    <year>1973</year>
-  </cd>
-  <cd>
-    <title>Maggie May</title>
-    <artist>Rod Stewart</artist>
-    <country>UK</country>
-    <company>Pickwick</company>
-    <price>8.50</price>
-    <year>1990</year>
-  </cd>
-  <cd>
-    <title>Romanza</title>
-    <artist>Andrea Bocelli</artist>
-    <country>EU</country>
-    <company>Polydor</company>
-    <price>10.80</price>
-    <year>1996</year>
-  </cd>
-  <cd>
-    <title>When a man loves a woman</title>
-    <artist>Percy Sledge</artist>
-    <country>USA</country>
-    <company>Atlantic</company>
-    <price>8.70</price>
-    <year>1987</year>
-  </cd>
-  <cd>
-    <title>Black angel</title>
-    <artist>Savage Rose</artist>
-    <country>EU</country>
-    <company>Mega</company>
-    <price>10.90</price>
-    <year>1995</year>
-  </cd>
-  <cd>
-    <title>1999 Grammy Nominees</title>
-    <artist>Many</artist>
-    <country>USA</country>
-    <company>Grammy</company>
-    <price>10.20</price>
-    <year>1999</year>
-  </cd>
-  <cd>
-    <title>For the good times</title>
-    <artist>Kenny Rogers</artist>
-    <country>UK</country>
-    <company>Mucik Master</company>
-    <price>8.70</price>
-    <year>1995</year>
-  </cd>
-  <cd>
-    <title>Big Willie style</title>
-    <artist>Will Smith</artist>
-    <country>USA</country>
-    <company>Columbia</company>
-    <price>9.90</price>
-    <year>1997</year>
-  </cd>
-  <cd>
-    <title>Tupelo Honey</title>
-    <artist>Van Morrison</artist>
-    <country>UK</country>
-    <company>Polydor</company>
-    <price>8.20</price>
-    <year>1971</year>
-  </cd>
-  <cd>
-    <title>Soulsville</title>
-    <artist>Jorn Hoel</artist>
-    <country>Norway</country>
-    <company>WEA</company>
-    <price>7.90</price>
-    <year>1996</year>
-  </cd>
-  <cd>
-    <title>The very best of</title>
-    <artist>Cat Stevens</artist>
-    <country>UK</country>
-    <company>Island</company>
-    <price>8.90</price>
-    <year>1990</year>
-  </cd>
-  <cd>
-    <title>Stop</title>
-    <artist>Sam Brown</artist>
-    <country>UK</country>
-    <company>A and M</company>
-    <price>8.90</price>
-    <year>1988</year>
-  </cd>
-  <cd>
-    <title>Bridge of Spies</title>
-    <artist>T\`Pau</artist>
-    <country>UK</country>
-    <company>Siren</company>
-    <price>7.90</price>
-    <year>1987</year>
-  </cd>
-  <cd>
-    <title>Private Dancer</title>
-    <artist>Tina Turner</artist>
-    <country>UK</country>
-    <company>Capitol</company>
-    <price>8.90</price>
-    <year>1983</year>
-  </cd>
-  <cd>
-    <title>Midt om natten</title>
-    <artist>Kim Larsen</artist>
-    <country>EU</country>
-    <company>Medley</company>
-    <price>7.80</price>
-    <year>1983</year>
-  </cd>
-  <cd>
-    <title>Pavarotti Gala Concert</title>
-    <artist>Luciano Pavarotti</artist>
-    <country>UK</country>
-    <company>DECCA</company>
-    <price>9.90</price>
-    <year>1991</year>
-  </cd>
-  <cd>
-    <title>The dock of the bay</title>
-    <artist>Otis Redding</artist>
-    <country>USA</country>
-    <company>Stax Records</company>
-    <price>7.90</price>
-    <year>1968</year>
-  </cd>
-  <cd>
-    <title>Picture book</title>
-    <artist>Simply Red</artist>
-    <country>EU</country>
-    <company>Elektra</company>
-    <price>7.20</price>
-    <year>1985</year>
-  </cd>
-  <cd>
-    <title>Red</title>
-    <artist>The Communards</artist>
-    <country>UK</country>
-    <company>London</company>
-    <price>7.80</price>
-    <year>1987</year>
-  </cd>
-  <cd>
-    <title>Unchain my heart</title>
-    <artist>Joe Cocker</artist>
-    <country>USA</country>
-    <company>EMI</company>
-    <price>8.20</price>
-    <year>1987</year>
-  </cd>
-</catalog>`;
+      const oneXML = `<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<!DOCTYPE 学生 SYSTEM "student.dtd">
+<?xml-stylesheet type="text/xsl" href="student.xsl"?>
+<学生>
+<个人基本信息>
+<照片>miffy.jpg</照片>
+<姓名>米菲</姓名>
+<性别>女</性别>
+<民族>兔佳族</民族>
+<出生地>大荷兰</出生地>
+<通讯地址>
+ <条目>130012</条目>
+ <条目>吉林省长春市前进大街 2699 号</条目>
+ <条目>吉林大学计算机科学与技术学院</条目>
+</通讯地址>
+<电子邮件>miffy@yahoo.com</电子邮件>
+</个人基本信息>
+<学历和工作简历>
+<条目>2003 年毕业于吉林大学附属小学</条目>
+<条目>2006 年毕业于吉林大学附属中学初中部</条目>
+<条目>2009 年毕业于吉林大学附属中学高中部</条目>
+<条目>2013 年毕业于吉林大学计算机学院</条目>
+<条目>2012.07 至 2012.09 在吉林大学就业指导中心实习</条目>
+</学历和工作简历>
+<已修课程>
+<条目>数据结构</条目>
+<条目>数据库原理</条目>
+<条目>C 语言程序设计</条目>
+<条目>Java 语言程序设计</条目>
+<条目>Web 应用开发基础</条目>
+<条目>XML 语言</条目>
+</已修课程>
+<已获奖励>
+<条目>2012 获中国大学生创新项目一等奖</条目>
+<条目>2013 获中国大学生软件竞赛一等奖</条目>
+</已获奖励>
+<已发表论文>
+<条目>人机对话中关键技术的探索，2011 年发表于《机器与人》创刊号第 1 页</条目>
+<条目>米菲家族祖先追踪，2012 年发表于《物种起源》卷 99999 第 8888 页</条目>
+</已发表论文>
+</学生>
+`;
       const oneXSL = `<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:template match="/">
-<html>
-<body>
-  <h2>My CD Collection</h2>
-  <table border="1">
-    <tr bgcolor="#9acd32">
-      <th style="text-align:left">Title</th>
-      <th style="text-align:left">Artist</th>
-      <th style="text-align:left">Price</th>
-      <th style="text-align:left">Year</th>
-    </tr>
-  </table>
-</body>
-</html>
-</xsl:template>
-</xsl:stylesheet>`;
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:template match="/">
+    <html>
+      <body>
+        <h2>
+          <xsl:value-of select="学生/个人基本信息/姓名"></xsl:value-of>
+          <span>的简历</span>
+        </h2>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
+`;
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict/ace.min.js"

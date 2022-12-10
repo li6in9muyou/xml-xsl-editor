@@ -116,6 +116,7 @@
         "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
       );
       const B = new XmlBeautify();
+      const STORAGE_PREFIX = "xml-xsl-editor";
 
       function renderPreview(xmlText, xslText, previewSelector) {
         const p = new DOMParser();
@@ -127,11 +128,45 @@
         document.querySelector(previewSelector).replaceChildren(nodes);
       }
 
+      function saveToLocalStorage() {
+        formatXMLXSL(xmlEdit);
+        formatXMLXSL(xslEdit);
+        localStorage.setItem(`${STORAGE_PREFIX}-xml`, xmlEdit.getValue());
+        localStorage.setItem(`${STORAGE_PREFIX}-xsl`, xslEdit.getValue());
+      }
+
+      function isEmpty(v) {
+        return v === null || v === undefined || v === "";
+      }
+
+      function loadFromLocalStorage() {
+        const savedXML = localStorage.getItem(`${STORAGE_PREFIX}-xml`);
+        if (!isEmpty(savedXML)) {
+          xmlEdit.setValue(savedXML);
+          formatXMLXSL(xmlEdit);
+        }
+
+        const savedXSL = localStorage.getItem(`${STORAGE_PREFIX}-xsl`);
+        if (!isEmpty(savedXML)) {
+          xslEdit.setValue(savedXSL);
+          formatXMLXSL(xslEdit);
+        }
+      }
+
       function genEditor(text, id) {
         const e = ace.edit(id);
         e.setTheme("ace/theme/monokai");
         e.session.setMode("ace/mode/xml");
         e.session.setValue(B.beautify(text));
+        e.commands.addCommand({
+          name: "saveFile",
+          bindKey: {
+            win: "Ctrl-S",
+            mac: "Command-S",
+            sender: "editor|cli",
+          },
+          exec: saveToLocalStorage,
+        });
         return e;
       }
 
@@ -142,6 +177,7 @@
     <script>
       const xmlEdit = genEditor(oneXML, "xml");
       const xslEdit = genEditor(oneXSL, "xsl");
+      loadFromLocalStorage();
       const updatePreview = () =>
         renderPreview(xmlEdit.getValue(), xslEdit.getValue(), "#preview");
       xmlEdit.session.on("change", updatePreview);

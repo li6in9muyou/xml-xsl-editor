@@ -189,6 +189,7 @@
       loadFromLocalStorage();
       const updatePreview = () =>
         renderPreview(xmlEdit.getValue(), xslEdit.getValue(), "#preview");
+      updatePreview();
       xmlEdit.session.on("change", updatePreview);
       xslEdit.session.on("change", updatePreview);
       document

@@ -102,6 +102,11 @@
           <xsl:value-of select="学生/个人基本信息/姓名"></xsl:value-of>
           <span>的简历</span>
         </h2>
+        <img id="selfie">
+          <xsl:attribute name="src">
+            <xsl:value-of select="学生/个人基本信息/照片"/>
+          </xsl:attribute>
+        </img>
       </body>
     </html>
   </xsl:template>

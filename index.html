@@ -13,11 +13,6 @@
         display: flex;
         gap: 1rem;
       }
-      .warn {
-        background-color: lightpink;
-        padding: 8px;
-        width: fit-content;
-      }
       section > header {
         display: flex;
         gap: 10px;
@@ -27,7 +22,10 @@
   </head>
   <body>
     <h1>XML、XSL编辑器</h1>
-    <h2 class="warn">刷新或关闭标签页你做的修改会全部丢失！</h2>
+    <section>
+      <button data-save>保存</button>
+      <button data-reset-data>重置数据</button>
+    </section>
     <main class="editors">
       <section>
         <header>
@@ -153,6 +151,15 @@
         }
       }
 
+      function clearLocalStorage() {
+        localStorage.removeItem(`${STORAGE_PREFIX}-xml`);
+        localStorage.removeItem(`${STORAGE_PREFIX}-xsl`);
+        xmlEdit.setValue(oneXML);
+        formatXMLXSL(xmlEdit);
+        xslEdit.setValue(oneXSL);
+        formatXMLXSL(xslEdit);
+      }
+
       function genEditor(text, id) {
         const e = ace.edit(id);
         e.setTheme("ace/theme/monokai");
@@ -188,6 +195,17 @@
       document
         .querySelector("[data-format-xml]")
         .addEventListener("click", () => () => formatXMLXSL(xmlEdit));
+    </script>
+    <script>
+      document
+        .querySelector("[data-save]")
+        .addEventListener("click", saveToLocalStorage);
+      document
+        .querySelector("[data-reset-data]")
+        .addEventListener("click", () => {
+          clearLocalStorage();
+          loadFromLocalStorage();
+        });
     </script>
   </body>
 </html>

@@ -111,6 +111,12 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/xml-beautify@1.2.3/dist/XmlBeautify.js"></script>
     <script>
+      ace.config.set(
+        "basePath",
+        "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
+      );
+      const B = new XmlBeautify();
+
       function renderPreview(xmlText, xslText, previewSelector) {
         const p = new DOMParser();
         const xml = p.parseFromString(xmlText, "application/xml");
@@ -120,48 +126,32 @@
         const nodes = trans.transformToFragment(xml, document);
         document.querySelector(previewSelector).replaceChildren(nodes);
       }
+
+      function genEditor(text, id) {
+        const e = ace.edit(id);
+        e.setTheme("ace/theme/monokai");
+        e.session.setMode("ace/mode/xml");
+        e.session.setValue(B.beautify(text));
+        return e;
+      }
+
+      function formatXMLXSL(edit) {
+        edit.session.setValue(B.beautify(edit.session.getValue()));
+      }
     </script>
     <script>
-      ace.config.set(
-        "basePath",
-        "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
-      );
-      const B = new XmlBeautify();
-      (() => {
-        function genEditor(text, id) {
-          const e = ace.edit(id);
-          e.setTheme("ace/theme/monokai");
-          e.session.setMode("ace/mode/xml");
-          e.session.setValue(B.beautify(text));
-          return e;
-        }
-
-        function genXmlXslPreview(xmlEdit, xslEdit, previewSelector) {
-          const cb = () =>
-            renderPreview(
-              xmlEdit.getValue(),
-              xslEdit.getValue(),
-              previewSelector
-            );
-          cb();
-          xmlEdit.session.on("change", cb);
-          xslEdit.session.on("change", cb);
-        }
-
-        const xslEdit = genEditor(oneXSL, "xsl");
-        const xmlEdit = genEditor(oneXSL, "xml");
-        genXmlXslPreview(xmlEdit, xslEdit, "#preview");
-        document
-          .querySelector("[data-format-xsl]")
-          .addEventListener("click", () =>
-            xslEdit.session.setValue(B.beautify(xslEdit.session.getValue()))
-          );
-        document
-          .querySelector("[data-format-xml]")
-          .addEventListener("click", () =>
-            xmlEdit.session.setValue(B.beautify(xmlEdit.session.getValue()))
-          );
-      })();
+      const xmlEdit = genEditor(oneXML, "xml");
+      const xslEdit = genEditor(oneXSL, "xsl");
+      const updatePreview = () =>
+        renderPreview(xmlEdit.getValue(), xslEdit.getValue(), "#preview");
+      xmlEdit.session.on("change", updatePreview);
+      xslEdit.session.on("change", updatePreview);
+      document
+        .querySelector("[data-format-xsl]")
+        .addEventListener("click", () => formatXMLXSL(xslEdit));
+      document
+        .querySelector("[data-format-xml]")
+        .addEventListener("click", () => () => formatXMLXSL(xmlEdit));
     </script>
   </body>
 </html>

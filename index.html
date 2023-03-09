@@ -118,13 +118,13 @@
       type="text/javascript"
       charset="utf-8"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/xml-beautify@1.2.3/dist/XmlBeautify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xml-formatter@3.3.2/dist/browser/xml-formatter-singleton.js"></script>
     <script>
       ace.config.set(
         "basePath",
         "https://cdn.jsdelivr.net/npm/ace-builds@1.13.0/src-noconflict"
       );
-      const B = new XmlBeautify();
+      const B = { beautify: xmlFormatter };
       const STORAGE_PREFIX = "xml-xsl-editor";
 
       function renderPreview(xmlText, xslText, previewSelector) {
